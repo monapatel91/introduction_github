@@ -1,24 +1,41 @@
-<form onsubmit="return myFunction()" method="post">
-<input id="pass1" type="password" placeholder="Password" style="border-radius:7px; border:2px solid #dadada;" /> <br />
-<input id="pass2" type="password" placeholder="Confirm Password" style="border-radius:7px; border:2px solid #dadada;"/> <br />
+<!DOCTYPE html>
+<html ng-app="validation">
 
-<script>
-    function myFunction() {
-    var pass1 = document.getElementById("pass1").value;
-    var pass2 = document.getElementById("pass2").value;
-    var ok = true;
-    if (pass1 != pass2) {
-        alert("Passwords Do not match");
-        document.getElementById("pass1").style.borderColor = "#E34234";
-        document.getElementById("pass2").style.borderColor = "#E34234";
-        ok = false;
-    }
-    else {
-        alert("Passwords Match!!!");
-    }
-    return ok;
-}
-</script>
-<input type="submit" value="Sumbit">
-kjhjkygyjtfyjt
-</form>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.css" />
+    <script src="https://code.angularjs.org/1.3.0-rc.2/angular.js"></script>
+    <script src="https://code.angularjs.org/1.3.0-rc.2/angular-messages.js"></script>
+   
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
+  </head>
+
+  <body class="container" ng-controller="RegistrationController as registration">
+    <h1>Register!</h1>
+    <h3>{{ registration.message }}</h3> 
+    <form name="registrationForm" novalidate 
+          ng-submit="registration.submit(registrationForm.$valid)">
+       <div class="form-group">
+            <label>User Name</label>
+            <input type="text" name="username" class="form-control" ng-model="registration.user.username" required />
+            <div ng-messages="registrationForm.username.$error" ng-messages-include="messages.html"></div>
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" name="password" class="form-control" ng-model="registration.user.password" required />
+            <div ng-messages="registrationForm.password.$error" ng-messages-include="messages.html"></div>
+        </div>
+        <div class="form-group">
+            <label>Confirm Password</label>
+            <input type="password" name="confirmPassword" class="form-control" 
+                   ng-model="registration.user.confirmPassword" 
+                   required compare-to="registration.user.password" />
+            <div ng-messages="registrationForm.confirmPassword.$error" ng-messages-include="messages.html"></div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Register!</button>
+        </div>
+    </form> 
+  </body>
+
+</html>
